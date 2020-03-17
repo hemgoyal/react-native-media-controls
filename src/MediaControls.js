@@ -28,7 +28,7 @@ type Props = {
   onReplay: Function,
   onSeek: Function,
   onSeeking: Function,
-  disableFullscreen: boolean
+  disableFullscreen: boolean,
 };
 
 type State = {
@@ -44,7 +44,7 @@ class MediaControls extends Component<Props, State> {
     onFullScreen: noop,
     onReplay: noop,
     onSeeking: noop,
-    disableFullscreen: true
+    disableFullscreen: true,
   };
 
   state = {
@@ -94,10 +94,7 @@ class MediaControls extends Component<Props, State> {
     const pressAction =
       playerState === PLAYER_STATES.ENDED ? this.onReplay : this.onPause;
     return (
-      <TouchableOpacity
-        style={[styles.playButton]}
-        onPress={pressAction}
-      >
+      <TouchableOpacity style={[styles.playButton]} onPress={pressAction}>
         <Image source={icon} style={styles.playIcon} />
       </TouchableOpacity>
     );
@@ -182,7 +179,7 @@ class MediaControls extends Component<Props, State> {
       playerState,
       progress,
       toolbar,
-      disableFullscreen
+      disableFullscreen,
     } = this.props;
 
     // this let us block the controls
@@ -193,7 +190,7 @@ class MediaControls extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <View style={[styles.controlsRow, styles.toolbarRow]}>{toolbar}</View>
-        <View style={[styles.controlsRow]}>
+        <View style={[styles.controlsRow, styles.playerControl]}>
           {isLoading
             ? this.setLoadingView()
             : this.setPlayerControls(playerState)}
@@ -219,16 +216,14 @@ class MediaControls extends Component<Props, State> {
               minimumTrackTintColor={mainColor}
             />
           </View>
-          {
-            !disableFullscreen ? (
-              <TouchableOpacity
-                style={styles.fullScreenContainer}
-                onPress={onFullScreen}
-              >
-                <Image source={fullScreenImage} />
-              </TouchableOpacity>
-            ) : null
-          }
+          {!disableFullscreen ? (
+            <TouchableOpacity
+              style={styles.fullScreenContainer}
+              onPress={onFullScreen}
+            >
+              <Image source={fullScreenImage} />
+            </TouchableOpacity>
+          ) : null}
         </View>
       </View>
     );
