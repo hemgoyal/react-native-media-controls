@@ -16,8 +16,7 @@
     "lint-staged": "lint-staged",
     "precommit": "lint-staged",
     "prepublish": "yarn run clean && yarn run build",
-    "test": "yarn run lint",
-    "postinstall": "cd ./node_modules/react-native-media-controls && npm install && npm run build"
+    "test": "yarn run lint"
   },
   "keywords": [
     "react-native",
