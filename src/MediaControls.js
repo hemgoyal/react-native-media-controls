@@ -28,6 +28,7 @@ type Props = {
   onReplay: Function,
   onSeek: Function,
   onSeeking: Function,
+  disableFullscreen: boolean
 };
 
 type State = {
@@ -43,6 +44,7 @@ class MediaControls extends Component<Props, State> {
     onFullScreen: noop,
     onReplay: noop,
     onSeeking: noop,
+    disableFullscreen: true
   };
 
   state = {
@@ -93,7 +95,7 @@ class MediaControls extends Component<Props, State> {
       playerState === PLAYER_STATES.ENDED ? this.onReplay : this.onPause;
     return (
       <TouchableOpacity
-        style={[styles.playButton, { backgroundColor: this.props.mainColor }]}
+        style={[styles.playButton]}
         onPress={pressAction}
       >
         <Image source={icon} style={styles.playIcon} />
@@ -180,6 +182,7 @@ class MediaControls extends Component<Props, State> {
       playerState,
       progress,
       toolbar,
+      disableFullscreen
     } = this.props;
 
     // this let us block the controls
@@ -216,12 +219,16 @@ class MediaControls extends Component<Props, State> {
               minimumTrackTintColor={mainColor}
             />
           </View>
-          <TouchableOpacity
-            style={styles.fullScreenContainer}
-            onPress={onFullScreen}
-          >
-            <Image source={fullScreenImage} />
-          </TouchableOpacity>
+          {
+            !disableFullscreen ? (
+              <TouchableOpacity
+                style={styles.fullScreenContainer}
+                onPress={onFullScreen}
+              >
+                <Image source={fullScreenImage} />
+              </TouchableOpacity>
+            ) : null
+          }
         </View>
       </View>
     );
