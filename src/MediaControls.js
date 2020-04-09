@@ -53,11 +53,17 @@ class MediaControls extends Component<Props, State> {
   };
 
   componentDidMount() {
-    this.fadeOutControls(5000);
+    // this.fadeOutControls(5000);
   }
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.playerState === PLAYER_STATES.ENDED) {
+      this.fadeInControls(false);
+    }
+    if (this.props.isLoading !== nextProps.isLoading && !nextProps.isLoading) {
+      this.fadeOutControls();
+    }
+    if (nextProps.isLoading) {
       this.fadeInControls(false);
     }
   }
