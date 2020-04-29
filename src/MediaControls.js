@@ -29,6 +29,8 @@ type Props = {
   onSeek: Function,
   onSeeking: Function,
   disableFullscreen: boolean,
+  onForward: Function,
+  onBackward: Function
 };
 
 type State = {
@@ -95,14 +97,73 @@ class MediaControls extends Component<Props, State> {
 
   setLoadingView = () => <ActivityIndicator size="large" color="#FFF" />;
 
+  _onBackward = () => {
+    const {
+      onBackward
+    } = this.props;
+
+    if (onBackward) {
+      onBackward();
+    }
+  }
+
+  _onForward = () => {
+    const {
+      onForward
+    } = this.props;
+
+    if (onForward) {
+      onForward();
+    }
+  }
+
+  getBackwardButton = () => {
+    const {
+      progress
+    } = this.props;
+
+    if (progress < 11) {
+      return <View style={styles.fwButton}></View>;
+    }
+
+    return (
+      <TouchableOpacity style={styles.fwButton} onPress={this._onBackward}>
+        <Image source={require('./assets/ic_backward.png')} style={styles.fwIcon} />
+        <Text style={styles.fwDuration}>10</Text>
+      </TouchableOpacity>
+    )
+  };
+
+  getForwardButton = () => {
+    const {
+      duration,
+      progress
+    } = this.props;
+
+    if ((duration - 12) < progress) {
+      return <View style={styles.fwButton}></View>;
+    }
+
+    return (
+      <TouchableOpacity style={styles.fwButton} onPress={this._onForward}>
+        <Text style={styles.fwDuration}>10</Text>
+        <Image source={require('./assets/ic_forward.png')} style={styles.fwIcon} />
+      </TouchableOpacity>
+    );
+  }
+
   setPlayerControls = (playerState: PlayerState) => {
     const icon = this.getPlayerStateIcon(playerState);
     const pressAction =
       playerState === PLAYER_STATES.ENDED ? this.onReplay : this.onPause;
     return (
-      <TouchableOpacity style={[styles.playButton]} onPress={pressAction}>
-        <Image source={icon} style={styles.playIcon} />
-      </TouchableOpacity>
+      <View style={styles.playerControls}>
+        {this.getBackwardButton()}
+        <TouchableOpacity style={[styles.playButton]} onPress={pressAction}>
+          <Image source={icon} style={styles.playIcon} />
+        </TouchableOpacity>
+        {this.getForwardButton()}
+      </View>
     );
   };
 
@@ -205,10 +266,7 @@ class MediaControls extends Component<Props, State> {
           <View style={styles.progressColumnContainer}>
             <View style={[styles.timerLabelsContainer]}>
               <Text style={styles.timerLabel}>
-                {humanizeVideoDuration(progress)}
-              </Text>
-              <Text style={styles.timerLabel}>
-                {humanizeVideoDuration(duration)}
+                {`${humanizeVideoDuration(progress)} / ${humanizeVideoDuration(duration)}`}
               </Text>
             </View>
             <Slider
