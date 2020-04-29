@@ -11,7 +11,7 @@ export default StyleSheet.create({
     paddingVertical: 0,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    backgroundColor: 'rgba(0, 0, 0, 0.20)',
     justifyContent: 'space-between',
     top: 0,
     left: 0,
@@ -41,7 +41,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 50,
-    height: 50
+    height: 50,
+    marginHorizontal: 50
   },
   playIcon: {
     width: 22,
@@ -64,8 +65,9 @@ export default StyleSheet.create({
   playerControl: {
     position: 'absolute',
     top: '50%',
-    left: '50%',
-    marginLeft: -25,
+    justifyContent: 'center',
+    flex: 1,
+    width: '100%',
     marginTop: -25
   },
   progressColumnContainer: {
@@ -83,7 +85,7 @@ export default StyleSheet.create({
   timerLabelsContainer: {
     alignSelf: 'stretch',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginBottom: -7
   },
   timerLabel: {
@@ -91,14 +93,34 @@ export default StyleSheet.create({
     color: 'white'
   },
   track: {
-    height: 5,
+    height: 2,
     borderRadius: 1
   },
   thumb: {
-    width: 20,
-    height: 20,
+    width: 12,
+    height: 12,
     borderRadius: 50,
-    backgroundColor: 'white',
+    backgroundColor: '#FF301B',
     borderWidth: 3
   },
+  playerControls: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  },
+  fwButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    minWidth: 50
+  },
+  fwIcon: {
+    width: 24,
+    height: 24
+  },
+  fwDuration: {
+    fontSize: 14,
+    color: 'white',
+    marginHorizontal: 5
+  }
 });
